@@ -1,0 +1,6 @@
+[package]
+name = "mathchain"
+version = "0.1.0"
+authors = ["Kozo Oeda <kozo.oeda@gmail.com>"]
+
+[dependencies]
