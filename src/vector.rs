@@ -186,14 +186,14 @@ fn distsq<T>(vec1: &Vec3<T>, vec2: &Vec3<T>) -> T where
 }
 
 //Normalize
-trait Norm where 
+trait Norm 
 {
     fn normalize(self: &mut Self) -> ();
 }
 
 impl Norm for Vec3<f32> 
 {
-    fn normalize(&mut self) -> () {
+    fn normalize(&mut self) {
         let len: f32  = (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
         *self = Vec3 {
             x: self.x / len, 
@@ -206,8 +206,8 @@ impl Norm for Vec3<f32>
 
 impl Norm for Vec3<f64> 
 {
-    fn normalize(&mut self) -> () {
-        let len: f64= (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
+    fn normalize(&mut self) {
+        let len: f64 = (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
         *self = Vec3 {
             x: self.x / len, 
             y: self.y / len, 
