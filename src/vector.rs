@@ -7,14 +7,14 @@ use std::ops::MulAssign;
 use std::ops::Div;
 use std::ops::DivAssign;
 
-pub trait FloatBound {}
+trait FloatBound {}
 
 impl FloatBound for f32 {}
 
 impl FloatBound for f64 {}
 
 #[derive(PartialEq, Eq, Debug, Clone)]
-pub struct Vec3<T> where
+struct Vec3<T> where
     T: FloatBound
 {
     pub x: T,
@@ -50,7 +50,7 @@ impl<T> Vec3<T> where
     T: FloatBound
 {
     #[inline]
-    pub fn new(x: T, y: T, z: T) -> Vec3<T> {
+    fn new(x: T, y: T, z: T) -> Vec3<T> {
         Vec3 {
             x: x,
             y: y,
@@ -176,14 +176,48 @@ impl<T> DivAssign<T> for Vec3<T> where
     }
 }
 
-//Distance
+//Distance Sq
 #[inline]
-pub fn distsq<T>(vec1: &Vec3<T>, vec2: &Vec3<T>) -> T where
+fn distsq<T>(vec1: &Vec3<T>, vec2: &Vec3<T>) -> T where
     T: Mul<Output=T> + Add<Output=T> + Sub<Output=T> + Clone + FloatBound
 {
     let dd: T = (vec1.clone().x - vec2.clone().x) * (vec1.clone().x - vec2.clone().x) + (vec1.clone().y - vec2.clone().y) * (vec1.clone().y - vec2.clone().y) + (vec1.clone().z - vec2.clone().z) * (vec1.clone().z - vec2.clone().z);
     dd
 }
+
+//Normalize
+trait Norm<T> where 
+    T: FloatBound
+{
+    fn normalize(self: &Self) -> Vec3<T>;
+}
+
+impl Norm<f32> for Vec3<f32> where 
+{
+    fn normalize(&self) -> Vec3<f32> {
+        let len: f32  = (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
+        Vec3 {
+            x: self.x / len, 
+            y: self.y / len, 
+            z: self.z / len, 
+
+        } 
+    }
+}
+
+impl Norm<f64> for Vec3<f64> where 
+{
+    fn normalize(&self) -> Vec3<f64> {
+        let len: f64= (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
+        Vec3 {
+            x: self.x / len, 
+            y: self.y / len, 
+            z: self.z / len, 
+
+        } 
+    }
+}
+
 
 //Basic type conversion.
 //From
