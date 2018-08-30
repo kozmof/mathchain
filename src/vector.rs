@@ -186,12 +186,15 @@ pub fn distsq<T>(vec1: &Vec3<T>, vec2: &Vec3<T>) -> T where
 }
 
 //Util
-trait Util
+trait Util<T> where 
+    T: FloatBound
 {
     fn normalize(self: &mut Self) -> ();
+    fn lensq(self: &Self) -> T;
+    fn len(self: &Self) -> T;
 }
 
-impl Util for Vec3<f32> 
+impl Util<f32> for Vec3<f32> 
 {
     fn normalize(&mut self) {
         let len: f32  = (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
@@ -201,10 +204,19 @@ impl Util for Vec3<f32>
             z: self.z / len, 
         };
     }
+
+    fn lensq(&self) -> f32 {
+        (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone())
+    }
+
+    fn len(&self) -> f32 {
+        self.lensq().sqrt() 
+    }
+
 }
 
 
-impl Util for Vec3<f64> 
+impl Util<f64> for Vec3<f64> 
 {
     fn normalize(&mut self) {
         let len: f64 = (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone()).sqrt();
@@ -214,6 +226,15 @@ impl Util for Vec3<f64>
             z: self.z / len, 
         };
     }
+
+    fn lensq(&self) -> f64 {
+        (self.x.clone() * self.x.clone() + self.y.clone() * self.y.clone() + self.z.clone() * self.z.clone())
+    }
+
+    fn len(&self) -> f64 {
+        self.lensq().sqrt() 
+    }
+
 }
 
 
