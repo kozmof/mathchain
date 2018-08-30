@@ -302,5 +302,20 @@ mod vec3_test {
         let result: f64 = 8.0;
         assert_eq!(distsq(&v3, &v4).sqrt(), result.sqrt());
     }
+
+    #[test]    
+    fn normalize_test() {
+        let mut v1: Vec3<f32> = Vec3::new(1.0, 1.0, 1.0);
+        let n : f32 = 3.0;
+        let v2: Vec3<f32> = Vec3::new(1.0 / n.sqrt(), 1.0 / n.sqrt(), 1.0 / n.sqrt());
+        v1.normalize();
+        assert_eq!(v1, v2);
+
+        let mut v3: Vec3<f64> = Vec3::new(1.0, 1.0, 1.0);
+        let n : f64= 3.0;
+        let v4: Vec3<f64> = Vec3::new(1.0 / n.sqrt(), 1.0 / n.sqrt(), 1.0 / n.sqrt());
+        v3.normalize();
+        assert_eq!(v3, v4);
+    }
 }
 
